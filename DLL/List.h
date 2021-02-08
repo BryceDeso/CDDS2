@@ -4,7 +4,7 @@ template<typename T>
 class List
 {
 public:
-	List() == {};
+	List();
 	List(List<T>&);
 	~List();
 	void destroy();
@@ -30,6 +30,12 @@ private:
 };
 
 template<typename T>
+inline List<T>::List()
+{
+
+}
+
+template<typename T>
 inline List<T>::List(List<T>&)
 {
 
@@ -44,31 +50,46 @@ inline List<T>::~List()
 template<typename T>
 void List<T>::destroy()
 {
-
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		delete m_nodeCount[i];
+	}
 }
 
 template<typename T>
 Iterator<T> List<T>::begin()
 {
-
+	
 }
 
 template<typename T>
 Iterator<T> List<T>::end()
 {
-
+	
 }
 
 template<typename T>
 bool List<T>::contains(const T& value)
 {
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		m_first++;
+		if (m_first.data == value)
+		{
+			return true;
+		}
+	}
 
+	return false;
 }
 
 template<typename T>
 void List<T>::pushFront(const T& value)
 {
-
+	if (value == m_first)
+	{
+		
+	}
 }
 
 template<typename T>
@@ -80,7 +101,7 @@ void List<T>::pushBack(const T& value)
 template<typename T>
 bool List<T>::insert(const T& value, int index)
 {
-
+	return false;
 }
 
 template<typename T>
@@ -92,7 +113,10 @@ bool List<T>::remove(const T& value)
 template<typename T>
 void List<T>::print()
 {
-
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		std::cout << m_nodeCount[i] << std::endl;
+	}
 }
 
 template<typename T>

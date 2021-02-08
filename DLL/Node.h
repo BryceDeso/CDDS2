@@ -1,8 +1,10 @@
+#include "iostream"
+
 template<typename T>
 class Node
 {
 public:
-	Node() == {};
+	Node();
 	Node(T value);
 	Node<T>* next;
 	Node<T>* previous;
@@ -11,6 +13,12 @@ public:
 private:
 
 };
+
+template<typename T>
+inline Node<T>::Node()
+{
+	
+}
 
 template<typename T>
 inline Node<T>::Node(T value)

@@ -4,7 +4,7 @@ template<typename T>
 class Iterator
 {
 public:
-	Iterator() == {};
+	Iterator();
 	Iterator(Node<T>* node);
 	Iterator<T> operator++();
 	Iterator<T> operator--();
@@ -17,21 +17,27 @@ private:
 };
 
 template<typename T>
+inline Iterator<T>::Iterator()
+{
+	
+}
+
+template<typename T>
 inline Iterator<T>::Iterator(Node<T>* node)
 {
-	m_current = node;
+	m_current.data = node;
 }
 
 template<typename T>
 Iterator<T> Iterator<T>::operator++()
 {
-
+	m_current++ = Node<int>::next;
 }
 
 template<typename T>
 Iterator<T> Iterator<T>::operator--()
 {
-
+	m_current-- = Node<int>::previous;
 }
 
 template<typename T>
@@ -48,11 +54,16 @@ const bool Iterator<T>::operator==(const Iterator<T>& iter)
 template<typename T>
 const bool Iterator<T>::operator!=(const Iterator<T>& iter)
 {
+	if (iter != m_current)
+	{
+		return true;
+	}
 
+	return false;
 }
 
 template<typename T>
 T Iterator<T>::operator*()
 {
-
+	
 }
