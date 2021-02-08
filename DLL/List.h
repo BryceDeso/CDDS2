@@ -73,11 +73,11 @@ bool List<T>::contains(const T& value)
 {
 	for (int i = 0; i < m_nodeCount; i++)
 	{
-		m_first++;
 		if (m_first.data == value)
 		{
 			return true;
 		}
+		m_first++;
 	}
 
 	return false;
