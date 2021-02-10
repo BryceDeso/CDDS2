@@ -86,13 +86,33 @@ bool List<T>::contains(const T& value)
 template<typename T>
 void List<T>::pushFront(const T& value)
 {
-	
+	Node<T>* node = new Node<T>(value);
+
+	node->next = m_first;
+	node.previous = nullptr;
+
+	if (m_first != nullptr)
+	{
+		m_first.previous = node;
+	}
+
+	m_first = node;
 }
 
 template<typename T>
 void List<T>::pushBack(const T& value)
 {
+	Node<T> node = new Node<T>(value);
 
+	node.next = nullptr;
+	node.previous = m_last;
+
+	if (m_last != nullptr)
+	{
+		m_last.next = node;
+	}
+
+	m_last = node;
 }
 
 template<typename T>
@@ -110,7 +130,7 @@ bool List<T>::remove(const T& value)
 template<typename T>
 void List<T>::print()
 {
-	for (Iterator<int> iter = begin(); iter != end(); iter++)
+	for (Iterator<int> iter = begin(); iter != end();)
 	{
 		std::cout << *iter << std::endl;
 	}
