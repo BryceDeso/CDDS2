@@ -73,7 +73,7 @@ bool List<T>::contains(const T& value)
 {
 	for (int i = 0; i < m_nodeCount; i++)
 	{
-		if (m_first.data == value)
+		if (Node<T>::m_current.data == value)
 		{
 			return true;
 		}
@@ -86,10 +86,7 @@ bool List<T>::contains(const T& value)
 template<typename T>
 void List<T>::pushFront(const T& value)
 {
-	if (value == m_first)
-	{
-		
-	}
+	
 }
 
 template<typename T>
@@ -113,28 +110,34 @@ bool List<T>::remove(const T& value)
 template<typename T>
 void List<T>::print()
 {
-	for (int i = 0; i < m_nodeCount; i++)
+	for (Iterator<int> iter = begin(); iter != end(); iter++)
 	{
-		std::cout << m_nodeCount[i] << std::endl;
+		std::cout << *iter << std::endl;
 	}
 }
 
 template<typename T>
 void List<T>::initalize()
 {
-
+	m_first = nullptr;
+	m_last = nullptr;
+	m_nodeCount = 0;
 }
 
 template<typename T>
 bool List<T>::isEmpty()
 {
-
+	if (m_nodeCount == 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 template<typename T>
 bool List<T>::getData(Iterator<T>& iter, int index)
 {
-
+	return false;
 }
 
 template<typename T>

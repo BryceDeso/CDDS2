@@ -25,19 +25,19 @@ inline Iterator<T>::Iterator()
 template<typename T>
 inline Iterator<T>::Iterator(Node<T>* node)
 {
-
+	m_current = node;
 }
 
 template<typename T>
 Iterator<T> Iterator<T>::operator++()
 {
-	m_current++ = Node<T>::next;
+
 }
 
 template<typename T>
 Iterator<T> Iterator<T>::operator--()
 {
-	m_current-- = Node<T>::previous;
+
 }
 
 template<typename T>
