@@ -24,8 +24,8 @@ public:
 	void sort();
 
 private:
-	Node<T> m_first;
-	Node<T> m_last;
+	Node<T>* m_first;
+	Node<T>* m_last;
 	int m_nodeCount;
 };
 
@@ -57,15 +57,18 @@ void List<T>::destroy()
 }
 
 template<typename T>
-Iterator<T> List<T>::begin()
+inline Iterator<T> List<T>::begin()
 {
-	
+	Iterator<T> iter = Iterator<T>(m_first);
+	return iter;
 }
 
 template<typename T>
-Iterator<T> List<T>::end()
+inline Iterator<T> List<T>::end()
 {
-	
+	Iterator<T> iter = Iterator<T>(m_last->next);
+
+	return iter;
 }
 
 template<typename T>
@@ -89,27 +92,28 @@ void List<T>::pushFront(const T& value)
 	Node<T>* node = new Node<T>(value);
 
 	node->next = m_first;
-	node.previous = nullptr;
+	node->previous = nullptr;
 
 	if (m_first != nullptr)
 	{
-		m_first.previous = node;
+		m_first->previous = node;
 	}
 
 	m_first = node;
+	m_nodeCount++;
 }
 
 template<typename T>
 void List<T>::pushBack(const T& value)
 {
-	Node<T> node = new Node<T>(value);
+	Node<T>* node = new Node<T>(value);
 
-	node.next = nullptr;
-	node.previous = m_last;
+	node->next = nullptr;
+	node->previous = m_last;
 
 	if (m_last != nullptr)
 	{
-		m_last.next = node;
+		m_last->next = node;
 	}
 
 	m_last = node;
@@ -132,6 +136,10 @@ void List<T>::print()
 {
 	for (Iterator<int> iter = begin(); iter != end();)
 	{
+		if (m_first == nullptr || m_last == nullptr)
+		{
+
+		}
 		std::cout << *iter << std::endl;
 	}
 }

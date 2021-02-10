@@ -13,7 +13,7 @@ public:
 	T operator*();
 
 private:
-	Node<T> m_current;
+	Node<T>* m_current;
 };
 
 template<typename T>
@@ -43,7 +43,7 @@ Iterator<T> Iterator<T>::operator--()
 template<typename T>
 const bool Iterator<T>::operator==(const Iterator<T>& iter)
 {
-	if (iter == m_current)
+	if (iter.m_current.data == m_current.data)
 	{
 		return true;
 	}
@@ -54,7 +54,7 @@ const bool Iterator<T>::operator==(const Iterator<T>& iter)
 template<typename T>
 const bool Iterator<T>::operator!=(const Iterator<T>& iter)
 {
-	if (iter != m_current)
+	if (iter.m_current->data != m_current->data)
 	{
 		return true;
 	}
@@ -65,5 +65,5 @@ const bool Iterator<T>::operator!=(const Iterator<T>& iter)
 template<typename T>
 T Iterator<T>::operator*()
 {
-	
+	return m_current->data;
 }
