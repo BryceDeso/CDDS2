@@ -106,23 +106,39 @@ void List<T>::pushFront(const T& value)
 template<typename T>
 void List<T>::pushBack(const T& value)
 {
+	//Creates a new node.
 	Node<T>* node = new Node<T>(value);
 
+	//Sets the new nodes next to null.
 	node->next = nullptr;
+	//Seting the nodes previous to be m_last.
 	node->previous = m_last;
 
+	//if m_last isn't equal to nullptr.
 	if (m_last != nullptr)
 	{
+		//Set m_lasts next to the new node.
 		m_last->next = node;
 	}
 
+	//set m_last to the new node, then increment the node count.
 	m_last = node;
+	m_nodeCount++;
 }
 
 template<typename T>
 bool List<T>::insert(const T& value, int index)
 {
-	return false;
+	Node<T>* node = new Node<T>(value);
+	
+	Node<T>* previousNode;
+	Node<T>* nextNode;
+	
+	previousNode->next = node;
+	nextNode->previous = node;
+
+	node->next = nextNode;
+	node->previous = previousNode;
 }
 
 template<typename T>

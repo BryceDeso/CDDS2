@@ -23,7 +23,5 @@ inline Node<T>::Node()
 template<typename T>
 inline Node<T>::Node(T value)
 {
-	next;
 	data = value;
-	previous;
 }
