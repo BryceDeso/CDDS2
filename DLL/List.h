@@ -144,7 +144,15 @@ bool List<T>::insert(const T& value, int index)
 template<typename T>
 bool List<T>::remove(const T& value)
 {
-	return false;
+	Node<T> node;
+	
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		if (node.next->data == value)
+		{
+
+		}
+	}
 }
 
 template<typename T>
