@@ -181,7 +181,7 @@ bool List<T>::remove(const T& value)
 			return true;
 		}
 	}
-	return false
+	return false;
 }
 
 template<typename T>
