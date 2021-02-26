@@ -62,7 +62,8 @@ template<typename T>
 inline Iterator<T> List<T>::begin()
 {
 	//Sets tempIter to be m_first.
-	Iterator<T> tempIter = Iterator<T>(m_first);
+	Iterator<T> tempIter;
+	tempIter.m_current = m_first->next;
 
 	return tempIter;
 }
@@ -104,7 +105,7 @@ void List<T>::pushFront(const T& value)
 	node->next = m_first;
 	node->previous = nullptr;
 
-	//If m_first isnt eqaual to nullptr
+	//If m_first isnt eqaual to nullptr.
 	if (m_first != nullptr)
 	{
 		//then set m_first's previous to node.
@@ -144,26 +145,23 @@ bool List<T>::insert(const T& value, int index)
 {
 	Node<T>* node = &Node<T>(value);
 	
-	Iterator<T>* tempIter = new Iterator<T>;
+	Iterator<T> tempIter = m_first;
+	int i = 0;
 
 	//Increments for the amount of the index.
-	for (int i = 0; i < index; i++)
-	{
-		//Moves iterator to next node.
-		tempIter->operator++();
-	}
-	
-	//If tempIter's m_current node's data is equal to value
-	if (tempIter->m_current->data == value)
+	if(i == index)
 	{
 		//Then set node's next to be tempIter's currents next.
-		node->next = tempIter->m_current->next;
+		node->next = tempIter.m_current->next;
 		//Set node's previous to tempIter's current previous.
-		node->previous = tempIter->m_current->previous;
+		node->previous = tempIter.m_current->previous;
 		//Incremt node count.
 		m_nodeCount++;
 		return true;
 	}
+	//Moves iterator to next node.
+	tempIter.operator++();
+
 	return false;
 }
 
@@ -188,13 +186,14 @@ template<typename T>
 void List<T>::print()
 {
 	//Iterates through list.
-	for (Iterator<int> iter = begin(); iter != end();)
+	for (Iterator<int> iter = begin(); iter != end(); iter.operator++())
 	{
 		//if m_first or m_last is equal to nullptr.
-		if (m_first == nullptr || m_last == nullptr)
+		if (m_first != nullptr || m_last != nullptr)
 		{
 			//print iter.
 			std::cout << *iter << std::endl;
+			iter.operator++();
 		}
 	}
 }

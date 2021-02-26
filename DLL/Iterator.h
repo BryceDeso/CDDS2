@@ -31,8 +31,8 @@ inline Iterator<T>::Iterator(Node<T>* node)
 template<typename T>
 Iterator<T> Iterator<T>::operator++()
 {
-	Iterator<T> tempIter;
-	tempIter.m_current = m_current->next;
+	Iterator<T> tempIter = m_current;
+	tempIter = m_current->next;
 	
 	return tempIter;
 }
