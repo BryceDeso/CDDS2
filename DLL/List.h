@@ -61,20 +61,13 @@ void List<T>::destroy()
 template<typename T>
 inline Iterator<T> List<T>::begin()
 {
-	//Sets tempIter to be m_first.
-	Iterator<T> tempIter;
-	tempIter.m_current = m_first->next;
-
-	return tempIter;
+	return Iterator<T>(m_first);
 }
 
 template<typename T>
 inline Iterator<T> List<T>::end()
 {
-	//Sets tempIter to be m_last;
-	Iterator<T> tempIter = Iterator<T>(m_last);
-
-	return tempIter;
+	return Iterator<T>(m_last);
 }
 
 template<typename T>
@@ -148,6 +141,10 @@ bool List<T>::insert(const T& value, int index)
 	Iterator<T> tempIter = m_first;
 	int i = 0;
 
+	for (i; i < index; i++)
+	{
+		tempIter.operator++();
+	}
 	//Increments for the amount of the index.
 	if(i == index)
 	{
@@ -160,7 +157,7 @@ bool List<T>::insert(const T& value, int index)
 		return true;
 	}
 	//Moves iterator to next node.
-	tempIter.operator++();
+	
 
 	return false;
 }
@@ -193,7 +190,6 @@ void List<T>::print()
 		{
 			//print iter.
 			std::cout << *iter << std::endl;
-			iter.operator++();
 		}
 	}
 }
