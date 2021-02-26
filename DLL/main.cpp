@@ -2,15 +2,13 @@
 
 int main()
 {
-	List<int> list;
+	List<int>* list = new List<int>();
 
-	list.pushFront(1);
-	list.pushFront(2);
-	list.pushFront(3);
-	list.pushFront(4);
-	list.pushFront(5);
-
-	list.print();
+	list->pushFront(10);
+	list->pushBack(15);
+	list->contains(15);
+	
+	list->print();
 
 	return 0;
 };

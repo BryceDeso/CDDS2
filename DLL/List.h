@@ -18,10 +18,10 @@ public:
 	void print();
 	void initalize();
 	bool isEmpty();
-	bool getData(Iterator<T>& iter, int index);
+	bool setIterator(Iterator<T>& iter, int index);
 	int getLenght();
 	List<T>& operator=(const List<T>& otherList);
-	void sort();
+	void sort(List<T>* list);
 
 private:
 	Node<T>* m_first;
@@ -36,22 +36,24 @@ inline List<T>::List()
 }
 
 template<typename T>
-inline List<T>::List(List<T>&)
+inline List<T>::List(List<T>& list)
 {
-
+	this = list;
 }
 
 template<typename T>
 inline List<T>::~List()
 {
-
+	delete this;
 }
 
 template<typename T>
 void List<T>::destroy()
 {
+	//Iterates for each node in the list.
 	for (int i = 0; i < m_nodeCount; i++)
 	{
+		//deletes node at the index.
 		delete m_nodeCount[i];
 	}
 }
@@ -59,28 +61,35 @@ void List<T>::destroy()
 template<typename T>
 inline Iterator<T> List<T>::begin()
 {
-	Iterator<T> iter = Iterator<T>(m_first);
-	return iter;
+	//Sets tempIter to be m_first.
+	Iterator<T> tempIter = Iterator<T>(m_first);
+
+	return tempIter;
 }
 
 template<typename T>
 inline Iterator<T> List<T>::end()
 {
-	Iterator<T> iter = Iterator<T>(m_last->next);
+	//Sets tempIter to be m_last;
+	Iterator<T> tempIter = Iterator<T>(m_last);
 
-	return iter;
+	return tempIter;
 }
 
 template<typename T>
 bool List<T>::contains(const T& value)
 {
+	Iterator<T> tempIter = begin();
+	//Iterates for each node in the list.
 	for (int i = 0; i < m_nodeCount; i++)
 	{
-		if (Node<T>::m_current.data == value)
+		//If tempIter's current node's data is equal to value return true.
+		if (tempIter.m_current->data == value)
 		{
 			return true;
 		}
-		m_first++;
+		//Moves iterator to next node.
+		tempIter.operator++();
 	}
 
 	return false;
@@ -91,14 +100,18 @@ void List<T>::pushFront(const T& value)
 {
 	Node<T>* node = new Node<T>(value);
 
+	//Sets node's next to m_first then its previous to nullptr.
 	node->next = m_first;
 	node->previous = nullptr;
 
+	//If m_first isnt eqaual to nullptr
 	if (m_first != nullptr)
 	{
+		//then set m_first's previous to node.
 		m_first->previous = node;
 	}
 
+	//Set m_first to node then increment m_nodecount.
 	m_first = node;
 	m_nodeCount++;
 }
@@ -129,39 +142,58 @@ void List<T>::pushBack(const T& value)
 template<typename T>
 bool List<T>::insert(const T& value, int index)
 {
-	Node<T>* node = new Node<T>(value);
+	Node<T>* node = &Node<T>(value);
 	
-	Node<T>* previousNode;
-	Node<T>* nextNode;
-	
-	previousNode->next = node;
-	nextNode->previous = node;
+	Iterator<T>* tempIter = new Iterator<T>;
 
-	node->next = nextNode;
-	node->previous = previousNode;
+	//Increments for the amount of the index.
+	for (int i = 0; i < index; i++)
+	{
+		//Moves iterator to next node.
+		tempIter->operator++();
+	}
+	
+	//If tempIter's m_current node's data is equal to value
+	if (tempIter->m_current->data == value)
+	{
+		//Then set node's next to be tempIter's currents next.
+		node->next = tempIter->m_current->next;
+		//Set node's previous to tempIter's current previous.
+		node->previous = tempIter->m_current->previous;
+		//Incremt node count.
+		m_nodeCount++;
+		return true;
+	}
+	return false;
 }
 
 template<typename T>
 bool List<T>::remove(const T& value)
 {
-	Node<T> node;
+	Node<T>* node = m_first;
 	
+	//Iterates for the lenght of m_nodecount.
 	for (int i = 0; i < m_nodeCount; i++)
 	{
-		if (node.next->data == value)
+		//if node's next data is equal to value.
+		if (node->next->data == value)
 		{
-
+			return true;
 		}
 	}
+	return false
 }
 
 template<typename T>
 void List<T>::print()
 {
+	//Iterates through list.
 	for (Iterator<int> iter = begin(); iter != end();)
 	{
+		//if m_first or m_last is equal to nullptr.
 		if (m_first == nullptr || m_last == nullptr)
 		{
+			//print iter.
 			std::cout << *iter << std::endl;
 		}
 	}
@@ -178,6 +210,7 @@ void List<T>::initalize()
 template<typename T>
 bool List<T>::isEmpty()
 {
+	//if m_nodecount is equal to zero return true.
 	if (m_nodeCount == 0)
 	{
 		return true;
@@ -186,8 +219,21 @@ bool List<T>::isEmpty()
 }
 
 template<typename T>
-bool List<T>::getData(Iterator<T>& iter, int index)
+bool List<T>::setIterator(Iterator<T>& iter, int index)
 {
+	iter = m_first;
+
+	//while iter isnt equal to index
+	while (iter != index)
+	{
+		//if(iter is equal to index, return true
+		if (iter == index)
+		{
+			return true;
+		}
+		//Moves iterator to next node
+		iter.operator++();
+	}
 	return false;
 }
 
@@ -203,8 +249,20 @@ List<T>& List<T>::operator=(const List<T>& otherlist)
 
 }
 
+	//Bubble sort.
 template<typename T>
-void List<T>::sort()
+void List<T>::sort(List<T>* list)
 {
-
+	for (int i = 0; i < m_nodeCount; i++)
+	{
+		for (int j = m_nodeCount - 1; j > i; j--)
+		{
+			if (list[j] < list[j - 1])
+			{
+				T temp = list[j];
+				list[j] = list[j - 1];
+				list[j - 1] = temp;
+			}
+		}
+	}
 }
